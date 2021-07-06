@@ -1,9 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AccountActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:background="@color/colorPrimary" />
+
+    <TextView
+        android:id="@+id/txtUsuario"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="Hola, Usuario"
+        android:textColor="@android:color/white"
+        android:textSize="25sp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btTransferir"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="120dp"
+        android:backgroundTint="#2B5589"
+        android:src="@drawable/ic_compare_arrows_black_24dp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btOportunidades"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="120dp"
+        android:backgroundTint="#E88E4C"
+        android:src="@drawable/ic_add_black_24dp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btRetiro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="120dp"
+        android:layout_marginRight="50dp"
+        android:backgroundTint="#49A2A4"
+        android:src="@drawable/ic_dock_black_24dp" />
+
+    <TextView
+        android:id="@+id/txtTransferir"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btTransferir"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="5dp"
+        android:text="Tranferir"
+        android:textColor="@android:color/white" />
+
+    <TextView
+        android:id="@+id/txtOportunidades"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btOportunidades"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:text="Oportunidades"
+        android:textColor="@android:color/white" />
+
+    <TextView
+        android:id="@+id/txtRetiro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btRetiro"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="20dp"
+        android:text="Retiro sin tarjeta"
+        android:textColor="@android:color/white" />
+
+    <TextView
+        android:id="@+id/txtLeyendaCuentas"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/txtRetiro"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginRight="10dp"
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:paddingLeft="15dp"
+        android:text="CUENTAS EN PESOS"
+        android:textColor="#797979"
+        android:textStyle="bold" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvCuentas"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtLeyendaCuentas"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@android:color/white"/>
+
+</RelativeLayout>
