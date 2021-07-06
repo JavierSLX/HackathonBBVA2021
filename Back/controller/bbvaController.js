@@ -12,5 +12,17 @@ module.exports = {
                 reject(error);
             });
         });
+    },
+    getAccess: (id, pass) => {
+        return new Promise((resolve, reject) => {
+
+            let mysql = new MySQL();
+
+            mysql.getAccess(id, pass).then(result => {
+                resolve(result);
+            }).catch(error => {
+                reject(error);
+            });
+        });
     }
 }

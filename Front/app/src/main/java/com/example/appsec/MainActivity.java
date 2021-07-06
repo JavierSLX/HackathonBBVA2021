@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import com.example.appsec.controller.UserDAO;
 import com.example.appsec.model.Request;
 import com.example.appsec.model.User;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class MainActivity extends AppCompatActivity
@@ -45,20 +47,38 @@ public class MainActivity extends AppCompatActivity
     private View.OnClickListener eventEntrar = new View.OnClickListener()
     {
         @Override
-        public void onClick(View v)
+        public void onClick(final View v)
         {
-            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-            builder.setMessage("Hola").setPositiveButton("OK", new DialogInterface.OnClickListener()
+            progressBar.setVisibility(View.VISIBLE);
+
+            //Manda llamar la API de acceso
+            UserDAO.getInstance().getUserCredentialID(MainActivity.this, 1, edtPass.getText().toString(), new Request.OnResultElementListener<Integer>()
             {
                 @Override
-                public void onClick(DialogInterface dialog, int which)
+                public void onSucess(Integer response)
                 {
-                    dialog.cancel();
+                    progressBar.setVisibility(View.GONE);
+                    if(response > 0)
+                    {
+                        //Manda a la siguiente actividad si el logeo se logra
+                        Intent intent = new Intent(MainActivity.this, AccountActivity.class);
+                        intent.putExtra("ID", 1);
+                        startActivity(intent);
+                    }
+                    else
+                    {
+                        Snackbar snackbar = Snackbar.make(v, "Credenciales incorrectas", Snackbar.LENGTH_LONG);
+                        snackbar.show();
+                    }
+                }
+
+                @Override
+                public void onFailed(String error, int statusCode)
+                {
+                    progressBar.setVisibility(View.GONE);
+                    Log.e("user", String.format("Error: %s, Code: %d", error, statusCode));
                 }
             });
-
-            AlertDialog dialog = builder.create();
-            dialog.show();
         }
     };
 
@@ -79,6 +99,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onFailed(String error, int statusCode)
             {
+                progressBar.setVisibility(View.GONE);
                 Log.e("user", String.format("Error: %s, Code: %d", error, statusCode));
             }
         });

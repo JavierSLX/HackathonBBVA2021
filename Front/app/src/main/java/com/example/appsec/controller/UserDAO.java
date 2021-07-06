@@ -36,7 +36,7 @@ public class UserDAO
     //Permite obtener los datos de usuario a partir de su id
     public StringRequest getUser(Context context, int id, final Request.OnResultElementListener<User> listener)
     {
-        url += "getuser";
+        String enlace = url + "getuser";
 
         JSONObject params = new JSONObject();
 
@@ -47,7 +47,7 @@ public class UserDAO
             Log.d("json", e.toString());
         }
 
-        Request.POST post = new Request.POST(context, url, params);
+        Request.POST post = new Request.POST(context, enlace, params);
         return post.getResponse(new Request.OnRequestListener<String>()
         {
             @Override
@@ -71,5 +71,45 @@ public class UserDAO
                 listener.onFailed(error, statusCode);
             }
         }, "getuser");
+    }
+
+    //Permite realizar un logeo a partir del id y del pass
+    public StringRequest getUserCredentialID(Context context, int id, String pass, final Request.OnResultElementListener<Integer> listener)
+    {
+        String enlace = url + "getaccess";
+
+        JSONObject params = new JSONObject();
+
+        try
+        {
+            params.put("id", id);
+            params.put("pass", pass);
+        }catch (JSONException e)
+        {
+            Log.d("json", e.toString());
+        }
+
+        Request.POST post = new Request.POST(context, enlace, params);
+        return post.getResponse(new Request.OnRequestListener<String>()
+        {
+            @Override
+            public void onSucess(String response)
+            {
+                try {
+                    JSONObject object = new JSONObject(response);
+                    int id = object.getJSONObject("data").getInt("id");
+                    listener.onSucess(id);
+                }catch (JSONException e)
+                {
+                    listener.onSucess(null);
+                }
+            }
+
+            @Override
+            public void onFailed(String error, int statusCode)
+            {
+                listener.onFailed(error, statusCode);
+            }
+        }, "getaccess");
     }
 }

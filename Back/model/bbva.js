@@ -17,11 +17,9 @@ class MySQL
         return new Promise((resolve, reject) => {
             this.connectMySQL().then(connection => {
 
-                let query = `SELECT u.id, u.nombre, u.apellido\
-                FROM credential c\
-                JOIN users u ON c.id = u.credential_id\
-                WHERE u.id = '${id}'\
-                AND c.activo = TRUE`;
+                let query = `SELECT id, nombre, apellido\
+                FROM users \
+                WHERE id = '${id}'`;
 
                 connection.query(query, [], (error, result) => {
                     if(error)
@@ -30,6 +28,33 @@ class MySQL
                         resolve(result);
 
                     connection.end();
+                });
+            });
+        });
+    }
+
+    /**
+     * @description Permite realizar el logeo en la aplicación
+     * @param {number} id 
+     * @param {string} pass 
+     * @returns 
+     */
+    getAccess(id, pass)
+    {
+        return new Promise((resolve, reject) => {
+            this.connectMySQL().then(connection => {
+
+                let query = `SELECT c.id\
+                FROM users u\
+                JOIN credential c ON u.credential_id = c.id\
+                AND u.id = ${id}\
+                AND c.pass = '${pass}'`;
+
+                connection.query(query, [], (error, result) => {
+                    if(error)
+                        reject(error);
+                    else
+                        resolve(result);
                 });
             });
         });

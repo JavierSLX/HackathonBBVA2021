@@ -1,4 +1,4 @@
-const {getUser} = require("../../../controller/bbvaController");
+const {getUser, getAccess} = require("../../../controller/bbvaController");
 
 module.exports = (app) => {
 
@@ -14,6 +14,20 @@ module.exports = (app) => {
         getUser(body.id).then(result => {
 
             let object = result.length > 0 ? result[0] : result;
+            response.status(200).json({codigo: 0, data: object});
+        }).catch(error => {
+            console.log(error);
+            response.status(500).json({codigo: 1, data: "Error"});
+        });
+    });
+
+    //Peticion que permite el logeo de un usuario
+    app.post("/bbva/getaccess", (request, response) => {
+        let body = request.body;
+
+        getAccess(body.id, body.pass).then(result => {
+
+            let object = result.length > 0 ? result[0] : {id: 0}
             response.status(200).json({codigo: 0, data: object});
         }).catch(error => {
             console.log(error);
