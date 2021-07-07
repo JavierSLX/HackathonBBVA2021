@@ -15,6 +15,7 @@ import com.example.appsec.controller.AdapterAccount;
 import com.example.appsec.controller.UserDAO;
 import com.example.appsec.model.Account;
 import com.example.appsec.model.Request;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
@@ -57,7 +58,7 @@ public class AccountActivity extends AppCompatActivity
             public void onSucess(List<Account> response)
             {
                 progressBar.setVisibility(View.GONE);
-                rvCuentas.setAdapter(new AdapterAccount(response));
+                rvCuentas.setAdapter(new AdapterAccount(response, listener));
             }
 
             @Override
@@ -68,4 +69,15 @@ public class AccountActivity extends AppCompatActivity
             }
         });
     }
+
+    //Evento al dar click al elemento (formado por una interface en el adaptador)
+    private AdapterAccount.OnItemClickListener listener = new AdapterAccount.OnItemClickListener()
+    {
+        @Override
+        public void onItemClick(View view, Account account)
+        {
+            Snackbar snackbar = Snackbar.make(view, "Datos " + account.toString(), Snackbar.LENGTH_LONG);
+            snackbar.show();
+        }
+    };
 }
