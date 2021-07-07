@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity
             progressBar.setVisibility(View.VISIBLE);
 
             //Manda llamar la API de acceso
-            UserDAO.getInstance().getUserCredentialID(MainActivity.this, 1, edtPass.getText().toString(), new Request.OnResultElementListener<Integer>()
+            UserDAO.getInstance().getUserCredentialID(MainActivity.this,1, edtPass.getText().toString(), new Request.OnResultElementListener<Integer>()
             {
                 @Override
                 public void onSucess(Integer response)
@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity
                         //Manda a la siguiente actividad si el logeo se logra
                         Intent intent = new Intent(MainActivity.this, AccountActivity.class);
                         intent.putExtra("ID", 1);
+                        intent.putExtra("nombre", txtUser.getText().toString());
                         startActivity(intent);
                     }
                     else
@@ -87,7 +88,7 @@ public class MainActivity extends AppCompatActivity
     {
         progressBar.setVisibility(View.VISIBLE);
 
-        UserDAO.getInstance().getUser(this, 1, new Request.OnResultElementListener<User>(){
+        UserDAO.getInstance().getUser(MainActivity.this, 1, new Request.OnResultElementListener<User>(){
             @Override
             public void onSucess(User response)
             {

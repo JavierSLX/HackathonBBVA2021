@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.android.volley.toolbox.StringRequest;
+import com.example.appsec.model.Account;
 import com.example.appsec.model.Request;
 import com.example.appsec.model.User;
 import com.example.appsec.resources.Constants;
@@ -12,7 +13,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class UserDAO
@@ -111,5 +114,45 @@ public class UserDAO
                 listener.onFailed(error, statusCode);
             }
         }, "getaccess");
+    }
+
+    //Permite obtener los datos bancarios de un usuario
+    public StringRequest getUserAccounts(Context context, int id, final Request.OnResultListListener<Account> listener)
+    {
+        String enlace = url + "getaccounts" + "?id=" + id;
+
+        Request.GET get = new Request.GET(context, enlace);
+        return get.getResponse(new Request.OnRequestListener<String>()
+        {
+            @Override
+            public void onSucess(String response)
+            {
+                Log.d("accounts", response);
+                try {
+                    JSONObject responseJson = new JSONObject(response);
+                    JSONArray respuesta = responseJson.getJSONArray("data");
+                    List<Account> lista = new ArrayList<>();
+
+                    for(int i = 0; i < respuesta.length(); i++)
+                    {
+                        JSONObject object = respuesta.getJSONObject(i);
+                        Account account = new Account(object.getInt("id"), object.getString("numero"), object.getString("tarjeta"),
+                                object.getString("clabe"), object.getDouble("saldo"), object.getInt("user_id"));
+                        lista.add(account);
+                    }
+
+                    listener.onSucess(lista);
+                }catch (JSONException e)
+                {
+                    listener.onSucess(null);
+                }
+            }
+
+            @Override
+            public void onFailed(String error, int statusCode)
+            {
+                listener.onFailed(error, statusCode);
+            }
+        }, "getaccounts");
     }
 }

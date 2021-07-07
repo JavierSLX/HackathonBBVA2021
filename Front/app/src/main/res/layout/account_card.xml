@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="15dp">
+
+        <RelativeLayout
+            android:id="@+id/ltSuperior"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cuenta"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:textColor="#4D95D1"
+                android:layout_alignParentLeft="true"/>
+
+            <TextView
+                android:id="@+id/txtSaldo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="$ 0.00"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"/>
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/ltInferior"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ltSuperior">
+
+            <TextView
+                android:id="@+id/txtCuenta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="*0044"
+                android:textSize="20sp"
+                android:textStyle="italic"
+                android:textColor="@android:color/black"
+                android:layout_alignParentLeft="true"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="Saldo disponible"
+                android:textSize="20sp"
+                android:textColor="#797979"/>
+
+        </RelativeLayout>
+
+</RelativeLayout>

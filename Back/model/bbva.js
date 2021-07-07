@@ -61,6 +61,29 @@ class MySQL
     }
 
     /**
+     * @description Permite la obtención de datos bancarios de un usuario
+     * @param {number} id 
+     */
+    getAccounts(id)
+    {
+        return new Promise((resolve, reject) => {
+            this.connectMySQL().then(connection => {
+
+                let query = `SELECT id, numero, tarjeta, clabe, saldo, user_id\
+                FROM accounts
+                WHERE user_id = ${id}`;
+
+                connection.query(query, [], (error, result) => {
+                    if(error)
+                        reject(error);
+                    else
+                        resolve(result);
+                });
+            });
+        });
+    }
+
+    /**
      * @description Obtiene la promesa para poder conectar a la DB
      */
     connectMySQL()

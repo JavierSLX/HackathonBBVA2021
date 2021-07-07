@@ -24,5 +24,17 @@ module.exports = {
                 reject(error);
             });
         });
+    },
+    getAccounts: (id) => {
+        return new Promise((resolve, reject) => {
+
+            let mysql = new MySQL();
+
+            mysql.getAccounts(id).then(result => {
+                resolve(result);
+            }).catch(error => {
+                reject(error);
+            });
+        });
     }
 }

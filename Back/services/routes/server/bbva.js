@@ -1,4 +1,4 @@
-const {getUser, getAccess} = require("../../../controller/bbvaController");
+const {getUser, getAccess, getAccounts} = require("../../../controller/bbvaController");
 
 module.exports = (app) => {
 
@@ -29,6 +29,19 @@ module.exports = (app) => {
 
             let object = result.length > 0 ? result[0] : {id: 0}
             response.status(200).json({codigo: 0, data: object});
+        }).catch(error => {
+            console.log(error);
+            response.status(500).json({codigo: 1, data: "Error"});
+        });
+    });
+
+    //Petición que permite la obtención de los datos bancarios de un usuario
+    app.get("/bbva/getaccounts", (request, response) => {
+
+        let query = request.query;
+
+        getAccounts(query.id).then(result => {
+            response.status(200).json({codigo: 0, data: result});
         }).catch(error => {
             console.log(error);
             response.status(500).json({codigo: 1, data: "Error"});
