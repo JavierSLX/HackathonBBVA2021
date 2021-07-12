@@ -84,6 +84,31 @@ class MySQL
     }
 
     /**
+     * @description Permite la obtención de las promociones de un usuario
+     * @param {number} id 
+     * @returns 
+     */
+    getPromociones(id)
+    {
+        return new Promise((resolve, reject) => {
+            this.connectMySQL().then(connection => {
+
+                let query = `SELECT p.id, p.descripcion, p.imagen\
+                FROM user_promo u\
+                JOIN promociones p ON u.promocion_id = p.id\
+                WHERE u.user_id = '${id}'`;
+
+                connection.query(query, [], (error, result) => {
+                    if(error)
+                        reject(error);
+                    else
+                        resolve(result);
+                });
+            });
+        });
+    }
+
+    /**
      * @description Obtiene la promesa para poder conectar a la DB
      */
     connectMySQL()

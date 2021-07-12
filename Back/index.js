@@ -7,6 +7,7 @@ const app = express();
 //Middlewares
 app.use(logger("dev"));
 app.use(bodyParser.json());
+app.use(express.static('resources'));
 
 //Rutas
 require('./services/routes/server')(app);

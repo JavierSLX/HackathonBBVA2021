@@ -1,4 +1,5 @@
-const {getUser, getAccess, getAccounts} = require("../../../controller/bbvaController");
+const path = require('path');
+const {getUser, getAccess, getAccounts, getPromotions} = require("../../../controller/bbvaController");
 
 module.exports = (app) => {
 
@@ -46,5 +47,25 @@ module.exports = (app) => {
             console.log(error);
             response.status(500).json({codigo: 1, data: "Error"});
         });
+    });
+
+    //Peticion que permite la obtencion de las promociones de un usuario
+    app.post("/bbva/getpromotions", (request, response) => {
+
+        let body = request.body;
+        getPromotions(body.id).then(result => {
+            response.status(200).json({codigo: 0, data: result});
+        }).catch(error => {
+            console.log(error);
+            response.status(500).json({codigo: 1, data: "Error"});
+        });
+    });
+
+    //Peticion que permite obtener una imagen de la carpeta de recursos
+    app.get("/bbva/imagen", (request, response) => {
+
+        let query = request.query;
+        let rootDir = path.dirname(require.main.filename);
+        response.status(200).sendFile(path.resolve(rootDir + `/resources/${query.elemento}.jpg`));
     });
 };
