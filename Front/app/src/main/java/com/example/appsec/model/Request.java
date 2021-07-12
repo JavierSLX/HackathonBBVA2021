@@ -1,18 +1,27 @@
 package com.example.appsec.model;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.util.Log;
+import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.Cache;
 import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Network;
 import com.android.volley.NetworkResponse;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.BasicNetwork;
+import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.HurlStack;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -65,6 +74,32 @@ public class Request
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
+                    listener.onFailed(error.toString(), error.networkResponse != null ? error.networkResponse.statusCode : 0);
+                }
+            });
+
+            request.setRetryPolicy(new DefaultRetryPolicy(30000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            request.setTag(tag);
+
+            queue.add(request);
+            return request;
+        }
+
+        public ImageRequest getImage(final OnResultElementListener<Bitmap> listener, String tag)
+        {
+            RequestQueue queue = Volley.newRequestQueue(context);
+            ImageRequest request = new ImageRequest(url, new Response.Listener<Bitmap>()
+            {
+                @Override
+                public void onResponse(Bitmap response)
+                {
+                    listener.onSucess(response);
+                }
+            }, 0, 0, ImageView.ScaleType.CENTER_CROP, null, new Response.ErrorListener()
+            {
+                @Override
+                public void onErrorResponse(VolleyError error)
+                {
                     listener.onFailed(error.toString(), error.networkResponse != null ? error.networkResponse.statusCode : 0);
                 }
             });

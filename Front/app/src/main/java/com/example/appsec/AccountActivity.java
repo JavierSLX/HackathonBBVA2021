@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -15,6 +16,7 @@ import com.example.appsec.controller.AdapterAccount;
 import com.example.appsec.controller.UserDAO;
 import com.example.appsec.model.Account;
 import com.example.appsec.model.Request;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
@@ -46,6 +48,9 @@ public class AccountActivity extends AppCompatActivity
         rvCuentas.setLayoutManager(new LinearLayoutManager(this));
 
         getData();
+
+        //Eventos de los botones floating
+        ((FloatingActionButton)findViewById(R.id.btOportunidades)).setOnClickListener(eventOportunidades);
     }
 
     //Obtiene los datos iniciales de la actividad
@@ -78,6 +83,18 @@ public class AccountActivity extends AppCompatActivity
         {
             Snackbar snackbar = Snackbar.make(view, "Datos " + account.toString(), Snackbar.LENGTH_LONG);
             snackbar.show();
+        }
+    };
+
+    //Evento del botón Oportunidades
+    private View.OnClickListener eventOportunidades = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View v)
+        {
+            Intent intent = new Intent(AccountActivity.this, PromotionActivity.class);
+            intent.putExtra("ID", id);
+            startActivity(intent);
         }
     };
 }

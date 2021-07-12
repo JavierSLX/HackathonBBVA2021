@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.android.volley.toolbox.StringRequest;
 import com.example.appsec.model.Account;
+import com.example.appsec.model.Promotion;
 import com.example.appsec.model.Request;
 import com.example.appsec.model.User;
 import com.example.appsec.resources.Constants;
@@ -154,5 +155,54 @@ public class UserDAO
                 listener.onFailed(error, statusCode);
             }
         }, "getaccounts");
+    }
+
+    //Permite obtener todas las promociones de un usuario
+    public StringRequest getPromotions(Context context, int id, final Request.OnResultListListener<Promotion> listener)
+    {
+        String enlace = url + "getpromotions";
+        JSONObject params = new JSONObject();
+
+        try {
+            params.put("id", id);
+        }catch (JSONException e)
+        {
+            Log.d("json", e.toString());
+        }
+
+        Request.POST post = new Request.POST(context, enlace, params);
+        return post.getResponse(new Request.OnRequestListener<String>()
+        {
+            @Override
+            public void onSucess(String response)
+            {
+                try {
+                    Log.d("promotions", response);
+                    JSONObject object = new JSONObject(response);
+                    JSONArray promotionList = object.getJSONArray("data");
+
+                    List<Promotion> lista = new ArrayList<>();
+                    for(int i = 0; i < promotionList.length(); i++)
+                    {
+                        JSONObject promotionObject = promotionList.getJSONObject(i);
+                        Promotion promotion = new Promotion(promotionObject.getInt("id"), promotionObject.getString("descripcion"),
+                                promotionObject.getString("imagen"));
+
+                        lista.add(promotion);
+                    }
+
+                    listener.onSucess(lista);
+                }catch (JSONException e)
+                {
+                    listener.onSucess(null);
+                }
+            }
+
+            @Override
+            public void onFailed(String error, int statusCode)
+            {
+                listener.onFailed(error, statusCode);
+            }
+        }, "getpromotions");
     }
 }
