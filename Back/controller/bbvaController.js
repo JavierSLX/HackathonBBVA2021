@@ -48,5 +48,17 @@ module.exports = {
                 reject(error);
             });
         });
+    },
+    getSearchPromotions: (id, search) => {
+        return new Promise((resolve, reject) => {
+
+            let mysql = new MySQL();
+
+            mysql.getSearchPromotions(id, search).then(result => {
+                resolve(result);
+            }).catch(error => {
+                reject(error);
+            });
+        });
     }
 }

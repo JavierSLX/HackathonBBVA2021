@@ -93,10 +93,37 @@ class MySQL
         return new Promise((resolve, reject) => {
             this.connectMySQL().then(connection => {
 
-                let query = `SELECT p.id, p.descripcion, p.imagen\
+                let query = `SELECT p.id, p.titulo, p.descripcion, p.imagen\
                 FROM user_promo u\
                 JOIN promociones p ON u.promocion_id = p.id\
                 WHERE u.user_id = '${id}'`;
+
+                connection.query(query, [], (error, result) => {
+                    if(error)
+                        reject(error);
+                    else
+                        resolve(result);
+                });
+            });
+        });
+    }
+
+    /**
+     * @description Obtiene las promociones a partir de una búsqueda
+     * @param {number} id 
+     * @param {string} search 
+     * @returns 
+     */
+    getSearchPromotions(id, search)
+    {
+        return new Promise((resolve, reject) => {
+            this.connectMySQL().then(connection => {
+
+                let query = `SELECT p.id, p.titulo, p.descripcion, p.imagen\
+                FROM user_promo u\
+                JOIN promociones p ON u.promocion_id = p.id\
+                WHERE u.user_id = ${id}\
+                AND p.titulo LIKE '${search}%'`;
 
                 connection.query(query, [], (error, result) => {
                     if(error)

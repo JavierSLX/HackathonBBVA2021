@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@android:color/white">
+    android:elevation="10dp"
+    android:layout_marginBottom="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,14 +15,32 @@
             android:layout_width="120dp"
             android:layout_height="120dp"/>
 
-        <TextView
-            android:id="@+id/txtPromotion"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Ejemplo"
-            android:textSize="20sp"
-            android:padding="10dp"
-            android:layout_gravity="center"/>
+            android:orientation="vertical"
+            android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/txtTitulo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Título"
+                android:textSize="20sp"
+                android:padding="10dp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/txtPromotion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ejemplo"
+                android:textSize="16sp"
+                android:padding="10dp"
+                android:layout_gravity="center"/>
+
+        </LinearLayout>
+
     </LinearLayout>
 
-</RelativeLayout>
+</androidx.cardview.widget.CardView>

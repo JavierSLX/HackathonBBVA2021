@@ -185,8 +185,8 @@ public class UserDAO
                     for(int i = 0; i < promotionList.length(); i++)
                     {
                         JSONObject promotionObject = promotionList.getJSONObject(i);
-                        Promotion promotion = new Promotion(promotionObject.getInt("id"), promotionObject.getString("descripcion"),
-                                promotionObject.getString("imagen"));
+                        Promotion promotion = new Promotion(promotionObject.getInt("id"), promotionObject.getString("titulo"),
+                                promotionObject.getString("descripcion"), promotionObject.getString("imagen"));
 
                         lista.add(promotion);
                     }
@@ -204,5 +204,55 @@ public class UserDAO
                 listener.onFailed(error, statusCode);
             }
         }, "getpromotions");
+    }
+
+    //Permite obtener las promociones de acuerdo a una búsqueda
+    public StringRequest getPromotionsSearch(Context context, int id, String search, final Request.OnResultListListener<Promotion> listener)
+    {
+        String enlace = url + "getpromotions/search";
+        JSONObject params = new JSONObject();
+
+        try {
+            params.put("id", id);
+            params.put("search", search);
+        }catch (JSONException e)
+        {
+            Log.d("json", e.toString());
+        }
+
+        Request.POST post = new Request.POST(context, enlace, params);
+        return post.getResponse(new Request.OnRequestListener<String>()
+        {
+            @Override
+            public void onSucess(String response)
+            {
+                try {
+                    Log.d("promotions", response);
+                    JSONObject object = new JSONObject(response);
+                    JSONArray promotionList = object.getJSONArray("data");
+
+                    List<Promotion> lista = new ArrayList<>();
+                    for(int i = 0; i < promotionList.length(); i++)
+                    {
+                        JSONObject promotionObject = promotionList.getJSONObject(i);
+                        Promotion promotion = new Promotion(promotionObject.getInt("id"), promotionObject.getString("titulo"),
+                                promotionObject.getString("descripcion"), promotionObject.getString("imagen"));
+
+                        lista.add(promotion);
+                    }
+
+                    listener.onSucess(lista);
+                }catch (JSONException e)
+                {
+                    listener.onSucess(null);
+                }
+            }
+
+            @Override
+            public void onFailed(String error, int statusCode)
+            {
+                listener.onFailed(error, statusCode);
+            }
+        }, "promotions-search");
     }
 }

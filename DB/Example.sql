@@ -42,20 +42,21 @@ INSERT INTO accounts(numero, tarjeta, clabe, saldo, user_id) VALUES ('1872863762
 CREATE TABLE promociones
 (
 	id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    titulo VARCHAR(30) NOT NULL,
     descripcion VARCHAR(100) NOT NULL,
     imagen VARCHAR(100) NOT NULL
 );
 
-INSERT INTO promociones(descripcion, imagen) VALUES ('Solicita tu tarjeta de crédito con tasa preferencial', 'tarjeta_credito');
-INSERT INTO promociones(descripcion, imagen) VALUES ('¿Necesitas un préstamo? Presiona aquí y solicítalo', 'prestamo');
-INSERT INTO promociones(descripcion, imagen) VALUES ('Con BBVA tu auto tiene el mejor seguro. ¡Garantizado!', 'seguro_auto');
-INSERT INTO promociones(descripcion, imagen) VALUES ('Nosotros también nos preocupamos por tus seres queridos, ve tu propuesta de seguro para ellos', 'seguro_vida');
-INSERT INTO promociones(descripcion, imagen) VALUES ('Nos preocupamos por la situación que te dejó la pandemia, acércate para ver nuestro apoyo', 'pandemia');
-INSERT INTO promociones(descripcion, imagen) VALUES ('Extendemos la garantía con los productos que adquieras con nosotros', 'garantia_extendida');
-INSERT INTO promociones(descripcion, imagen) VALUES ('Gustas algún producto con nuestros asociados, observa las ofertas que tienen', 'comercio');
-INSERT INTO promociones(descripcion, imagen) VALUES ('Tu mascota tiene la mejor protección con los mejores servicios', 'seguro_mascota');
-INSERT INTO promociones(descripcion, imagen) VALUES ('A partir de ahora hasta el fin del mes, tus puntos valen el doble en cualquier restaurante', 'restaurant');
-INSERT INTO promociones(descripcion, imagen) VALUES ('El mejor crédito hipotecario al alcance de tu mano', 'credito_hipotecario');
+INSERT INTO promociones(titulo, descripcion, imagen) VALUES ('Tarjeta de Crédito', 'Solicita tu tarjeta de crédito con tasa preferencial', 'tarjeta_credito');
+INSERT INTO promociones(titulo, descripcion, imagen) VALUES ('Préstamo Personal', '¿Necesitas un préstamo? Presiona aquí y solicítalo', 'prestamo');
+INSERT INTO promociones(titulo, descripcion, imagen) VALUES ('Seguro de Auto', 'Con BBVA tu auto tiene el mejor seguro. ¡Garantizado!', 'seguro_auto');
+INSERT INTO promociones(titulo, descripcion, imagen) VALUES ('Seguro de Vida', 'Nosotros también nos preocupamos por tus seres queridos, ve tu propuesta de seguro para ellos', 'seguro_vida');
+INSERT INTO promociones(titulo, descripcion, imagen) VALUES ('Reestructuración de Deuda', 'Nos preocupamos por la situación que te dejó la pandemia, acércate para ver nuestro apoyo', 'pandemia');
+INSERT INTO promociones(titulo, descripcion, imagen) VALUES ('Garantía Extendida', 'Extendemos la garantía con los productos que adquieras con nosotros', 'garantia_extendida');
+INSERT INTO promociones(titulo, descripcion, imagen) VALUES ('Comercio Electrónico', 'Gustas algún producto con nuestros asociados, observa las ofertas que tienen', 'comercio');
+INSERT INTO promociones(titulo, descripcion, imagen) VALUES ('Seguro de Mascotas', 'Tu mascota tiene la mejor protección con los mejores servicios', 'seguro_mascota');
+INSERT INTO promociones(titulo, descripcion, imagen) VALUES ('Pago de Puntos', 'A partir de ahora hasta el fin del mes, tus puntos valen el doble en cualquier restaurante', 'restaurant');
+INSERT INTO promociones(titulo, descripcion, imagen) VALUES ('Crédito Hipotecario', 'El mejor crédito hipotecario al alcance de tu mano', 'credito_hipotecario');
 
 CREATE TABLE user_promo
 (

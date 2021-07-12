@@ -5,12 +5,14 @@ import androidx.annotation.NonNull;
 public class Promotion
 {
     private int id;
+    private String titulo;
     private String description;
     private String image;
 
-    public Promotion(int id, String description, String image)
+    public Promotion(int id, String titulo, String description, String image)
     {
         this.id = id;
+        this.titulo = titulo;
         this.description = description;
         this.image = image;
     }
@@ -23,6 +25,16 @@ public class Promotion
     public void setId(int id)
     {
         this.id = id;
+    }
+
+    public String getTitulo()
+    {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo)
+    {
+        this.titulo = titulo;
     }
 
     public String getDescription()
@@ -49,6 +61,6 @@ public class Promotion
     @Override
     public String toString()
     {
-        return String.format("ID: %d, Description: %s, Image: %s", getId(), getDescription(), getImage());
+        return String.format("ID: %d, Titulo: %s, Description: %s, Image: %s", getId(), getTitulo(), getDescription(), getImage());
     }
 }

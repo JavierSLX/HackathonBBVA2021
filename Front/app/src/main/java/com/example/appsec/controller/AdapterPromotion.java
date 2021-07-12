@@ -42,11 +42,14 @@ public class AdapterPromotion extends RecyclerView.Adapter<AdapterPromotion.Prom
     @Override
     public void onBindViewHolder(@NonNull PromotionViewHolder holder, int position)
     {
+        holder.txtTitulo.setText(lista.get(position).getTitulo());
         holder.txtPromotion.setText(lista.get(position).getDescription());
 
         String enlace = Constants.HOST + "imagen?elemento=" + lista.get(position).getImage();
         Log.d("imagen", enlace);
-        Glide.with(context).load(enlace).into(holder.imgPromotion);
+
+        //Carga la imagen con la biblioteca Glide
+        Glide.with(context).load(enlace).centerCrop().into(holder.imgPromotion);
     }
 
     @Override
@@ -57,13 +60,14 @@ public class AdapterPromotion extends RecyclerView.Adapter<AdapterPromotion.Prom
 
     public static class PromotionViewHolder extends RecyclerView.ViewHolder
     {
-        TextView txtPromotion;
+        TextView txtPromotion, txtTitulo;
         ImageView imgPromotion;
 
         public PromotionViewHolder(@NonNull View itemView)
         {
             super(itemView);
 
+            txtTitulo = itemView.findViewById(R.id.txtTitulo);
             txtPromotion = itemView.findViewById(R.id.txtPromotion);
             imgPromotion = itemView.findViewById(R.id.imgPromotion);
         }

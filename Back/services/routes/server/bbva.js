@@ -1,5 +1,5 @@
 const path = require('path');
-const {getUser, getAccess, getAccounts, getPromotions} = require("../../../controller/bbvaController");
+const {getUser, getAccess, getAccounts, getPromotions, getSearchPromotions} = require("../../../controller/bbvaController");
 
 module.exports = (app) => {
 
@@ -54,6 +54,18 @@ module.exports = (app) => {
 
         let body = request.body;
         getPromotions(body.id).then(result => {
+            response.status(200).json({codigo: 0, data: result});
+        }).catch(error => {
+            console.log(error);
+            response.status(500).json({codigo: 1, data: "Error"});
+        });
+    });
+
+    //Peticion que permite la obtencion de las promociones de un usuario a partir de una busqueda
+    app.post("/bbva/getpromotions/search", (request, response) => {
+
+        let body = request.body;
+        getSearchPromotions(body.id, body.search).then(result => {
             response.status(200).json({codigo: 0, data: result});
         }).catch(error => {
             console.log(error);
