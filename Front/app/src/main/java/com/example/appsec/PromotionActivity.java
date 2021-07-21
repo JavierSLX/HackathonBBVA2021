@@ -13,12 +13,15 @@ import android.widget.ProgressBar;
 
 import com.example.appsec.controller.AdapterPromotion;
 import com.example.appsec.controller.UserDAO;
+import com.example.appsec.model.LogFile;
 import com.example.appsec.model.Promotion;
 import com.example.appsec.model.Request;
 import com.example.appsec.resources.Constants;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.List;
+import java.util.Locale;
 
 public class PromotionActivity extends AppCompatActivity
 {
@@ -75,17 +78,23 @@ public class PromotionActivity extends AppCompatActivity
     private View.OnClickListener eventButtonSearch = new View.OnClickListener()
     {
         @Override
-        public void onClick(View v)
+        public void onClick(final View v)
         {
             progressBar.setVisibility(View.VISIBLE);
 
-            String search = edtSearch.getText().toString();
-            UserDAO.getInstance().getPromotionsSearch(PromotionActivity.this, id, search, new Request.OnResultListListener<Promotion>()
+            final String search = edtSearch.getText().toString();
+            final LogFile logFile = LogFile.getInstance(Constants.LOG);
+
+            UserDAO.getInstance().getPromotionsSearch(PromotionActivity.this, v, id, search, new Request.OnResultListListener<Promotion>()
             {
                 @Override
                 public void onSucess(List<Promotion> response)
                 {
                     progressBar.setVisibility(View.GONE);
+
+                    //Se guarda en lo el resultado de la búsqueda
+                    logFile.putData(PromotionActivity.this, String.format(Locale.getDefault(),"Búsqueda. ID: %d, Resultados: %d, Texto: %s\n",
+                            id, response.size(), search));
                     rcPromotions.setAdapter(new AdapterPromotion(response));
                 }
 
@@ -93,6 +102,12 @@ public class PromotionActivity extends AppCompatActivity
                 public void onFailed(String error, int statusCode)
                 {
                     progressBar.setVisibility(View.GONE);
+
+                    logFile.putData(PromotionActivity.this, String.format(Locale.getDefault(),"Búsqueda. ID: %d, Resultados: 0, Texto: %s\n",
+                            id, search));
+                    rcPromotions.setAdapter(null);
+                    Snackbar snackbar = Snackbar.make(v, "Carga de datos incorrecta", Snackbar.LENGTH_LONG);
+                    snackbar.show();
                 }
             });
         }

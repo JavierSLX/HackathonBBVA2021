@@ -2,6 +2,7 @@ package com.example.appsec.controller;
 
 import android.content.Context;
 import android.util.Log;
+import android.view.View;
 
 import com.android.volley.toolbox.StringRequest;
 import com.example.appsec.model.Account;
@@ -9,6 +10,7 @@ import com.example.appsec.model.Promotion;
 import com.example.appsec.model.Request;
 import com.example.appsec.model.User;
 import com.example.appsec.resources.Constants;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -207,7 +209,7 @@ public class UserDAO
     }
 
     //Permite obtener las promociones de acuerdo a una búsqueda
-    public StringRequest getPromotionsSearch(Context context, int id, String search, final Request.OnResultListListener<Promotion> listener)
+    public StringRequest getPromotionsSearch(Context context, final View view, int id, String search, final Request.OnResultListListener<Promotion> listener)
     {
         String enlace = url + "getpromotions/search";
         JSONObject params = new JSONObject();

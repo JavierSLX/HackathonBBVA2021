@@ -1,11 +1,9 @@
 package com.example.appsec;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,8 +12,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.appsec.controller.UserDAO;
+import com.example.appsec.model.LogFile;
 import com.example.appsec.model.Request;
 import com.example.appsec.model.User;
+import com.example.appsec.resources.Constants;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity
     private TextView txtUser;
     private TextInputEditText edtPass;
     private ProgressBar progressBar;
+    private int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -36,11 +37,28 @@ public class MainActivity extends AppCompatActivity
         Button btEntrar = findViewById(R.id.btEntrar);
         progressBar = findViewById(R.id.progressBar);
 
+        //Obtiene el id de las preferencias
+        datePreferences();
+
         //Obtiene el usuario guardado en memoria
         getData();
 
         //Eventos
         btEntrar.setOnClickListener(eventEntrar);
+    }
+
+    //Permite obtener y/o guardar el id de la app
+    private void datePreferences()
+    {
+        SharedPreferences sharedPreferences = this.getPreferences(MODE_PRIVATE);
+        id = sharedPreferences.getInt("ID", 0);
+        if(id == 0)
+        {
+            id = 1;
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putInt("ID", id);
+            editor.apply();
+        }
     }
 
     //Evento de cuando se presiona el botón de Entrar
@@ -52,7 +70,7 @@ public class MainActivity extends AppCompatActivity
             progressBar.setVisibility(View.VISIBLE);
 
             //Manda llamar la API de acceso
-            UserDAO.getInstance().getUserCredentialID(MainActivity.this,1, edtPass.getText().toString(), new Request.OnResultElementListener<Integer>()
+            UserDAO.getInstance().getUserCredentialID(MainActivity.this, id, edtPass.getText().toString(), new Request.OnResultElementListener<Integer>()
             {
                 @Override
                 public void onSucess(Integer response)
@@ -60,9 +78,13 @@ public class MainActivity extends AppCompatActivity
                     progressBar.setVisibility(View.GONE);
                     if(response > 0)
                     {
+                        //Guarda acción en el log
+                        LogFile logFile = LogFile.getInstance(Constants.LOG);
+                        logFile.putData(MainActivity.this, String.format("Login exitoso. ID: %d, pass: %s\n", id, edtPass.getText().toString()));
+
                         //Manda a la siguiente actividad si el logeo se logra
                         Intent intent = new Intent(MainActivity.this, AccountActivity.class);
-                        intent.putExtra("ID", 1);
+                        intent.putExtra("ID", id);
                         intent.putExtra("nombre", txtUser.getText().toString());
                         startActivity(intent);
                     }
@@ -88,7 +110,7 @@ public class MainActivity extends AppCompatActivity
     {
         progressBar.setVisibility(View.VISIBLE);
 
-        UserDAO.getInstance().getUser(MainActivity.this, 1, new Request.OnResultElementListener<User>(){
+        UserDAO.getInstance().getUser(MainActivity.this, id, new Request.OnResultElementListener<User>(){
             @Override
             public void onSucess(User response)
             {

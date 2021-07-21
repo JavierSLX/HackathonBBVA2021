@@ -49,7 +49,7 @@ public class AdapterPromotion extends RecyclerView.Adapter<AdapterPromotion.Prom
         Log.d("imagen", enlace);
 
         //Carga la imagen con la biblioteca Glide
-        Glide.with(context).load(enlace).centerCrop().into(holder.imgPromotion);
+        Glide.with(context).load(enlace).centerCrop().placeholder(R.drawable.elemento).into(holder.imgPromotion);
     }
 
     @Override
