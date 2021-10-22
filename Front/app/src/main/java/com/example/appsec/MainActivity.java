@@ -19,6 +19,8 @@ import com.example.appsec.resources.Constants;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.util.Locale;
+
 public class MainActivity extends AppCompatActivity
 {
     private TextView txtUser;
@@ -80,7 +82,7 @@ public class MainActivity extends AppCompatActivity
                     {
                         //Guarda acción en el log
                         LogFile logFile = LogFile.getInstance(Constants.LOG);
-                        logFile.putData(MainActivity.this, String.format("Login exitoso. ID: %d, pass: %s\n", id, edtPass.getText().toString()));
+                        logFile.putData(MainActivity.this, String.format(Locale.getDefault(),"Login exitoso. ID: %d, pass: %s\n", id, edtPass.getText().toString()));
 
                         //Manda a la siguiente actividad si el logeo se logra
                         Intent intent = new Intent(MainActivity.this, AccountActivity.class);

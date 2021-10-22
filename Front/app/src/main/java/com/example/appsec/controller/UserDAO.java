@@ -42,7 +42,7 @@ public class UserDAO
     //Permite obtener los datos de usuario a partir de su id
     public StringRequest getUser(Context context, int id, final Request.OnResultElementListener<User> listener)
     {
-        String enlace = url + "getuser";
+        String enlace = url + Constants.GETUSER;
 
         JSONObject params = new JSONObject();
 
@@ -82,7 +82,7 @@ public class UserDAO
     //Permite realizar un logeo a partir del id y del pass
     public StringRequest getUserCredentialID(Context context, int id, String pass, final Request.OnResultElementListener<Integer> listener)
     {
-        String enlace = url + "getaccess";
+        String enlace = url + Constants.GETACCESS;
 
         JSONObject params = new JSONObject();
 
@@ -122,7 +122,7 @@ public class UserDAO
     //Permite obtener los datos bancarios de un usuario
     public StringRequest getUserAccounts(Context context, int id, final Request.OnResultListListener<Account> listener)
     {
-        String enlace = url + "getaccounts" + "?id=" + id;
+        String enlace = url + Constants.GETACCOUNTS + "?id=" + id;
 
         Request.GET get = new Request.GET(context, enlace);
         return get.getResponse(new Request.OnRequestListener<String>()
@@ -162,7 +162,7 @@ public class UserDAO
     //Permite obtener todas las promociones de un usuario
     public StringRequest getPromotions(Context context, int id, final Request.OnResultListListener<Promotion> listener)
     {
-        String enlace = url + "getpromotions";
+        String enlace = url + Constants.GETPROMOTIONS;
         JSONObject params = new JSONObject();
 
         try {
@@ -211,7 +211,7 @@ public class UserDAO
     //Permite obtener las promociones de acuerdo a una búsqueda
     public StringRequest getPromotionsSearch(Context context, final View view, int id, String search, final Request.OnResultListListener<Promotion> listener)
     {
-        String enlace = url + "getpromotions/search";
+        String enlace = url + Constants.SEARCH_PROMOTIONS;
         JSONObject params = new JSONObject();
 
         try {
