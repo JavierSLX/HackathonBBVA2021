@@ -222,7 +222,7 @@ class MySQL
             this.connectMySQL().then(connection => {
 
                 let query = `SELECT u.id AS idUser, CONCAT(u.nombre, ' ', u.apellido) AS nombre,
-                (  Select group_concat(a.id, ',', a.numero)
+                (  Select group_concat(a.id,',', a.numero)
                                 from accounts a 
                                 LEFT JOIN users us ON a.user_id = us.id
                                 WHERE us.id = u.id) AS cuentas
