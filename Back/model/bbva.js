@@ -344,9 +344,49 @@ class MySQL
         });
     }
 
+    /**
+     * @description Realiza un registro cuando se hace un pago recurrente
+     * @param {number} pagoID 
+     */
     setRegistroAutomatico(pagoID)
     {
-        
+        return new Promise((resolve, reject) => {
+            this.connectMySQL().then(connection => {
+
+                let query = `INSERT INTO registros_automaticos(pagos_id) VALUES(${pagoID})`;
+
+                connection.query(query, [], (error, result) => {
+                    if(error)
+                        reject(error);
+                    else
+                        resolve(result);
+                })
+            });
+        });
+    }
+
+    /**
+     * @description Saca los pagos que se tienen que hacer de una fecha determinada (Fecha en formato YYYY-MM-DD)
+     * @param {string} fecha 
+     * @returns 
+     */
+    getPagosRecurrentesPorFecha(fecha)
+    {
+        return new Promise((resolve, reject) => {
+            this.connectMySQL().then(connection => {
+
+                let query = `SELECT p.id, p.titulo, date_format(p.fecha, '%d-%m-%Y') AS fecha, p.cantidad, p.account_entrada, p.account_salida, p.recurrencia_id
+                FROM pagos_automaticos p
+                WHERE DATE(p.fecha) = '${fecha}'`;
+
+                connection.query(query, [], (error, result) => {
+                    if(error)
+                        reject(error);
+                    else
+                        resolve(result);
+                });
+            });
+        });
     }
 
     /**

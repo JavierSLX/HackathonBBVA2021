@@ -48,5 +48,27 @@ module.exports = {
                 reject(error);
             });
         });
+    },
+    setRegistroAutomatico: (pagoID) => {
+        return new Promise((resolve, reject) => {
+            let mysql = new MySQL();
+
+            mysql.setRegistroAutomatico(pagoID).then(result => {
+                resolve(result);
+            }).catch(error => {
+                reject(error);
+            });
+        });
+    },
+    getPagosRecurrentesPorFecha: (fecha) => {
+        return new Promise((resolve, reject) => {
+            let mysql = new MySQL();
+
+            mysql.getPagosRecurrentesPorFecha(fecha).then(result => {
+                resolve(result);
+            }).catch(error => {
+                reject(error);
+            });
+        });
     }
 }
