@@ -320,6 +320,11 @@ class MySQL
         });
     }
 
+    setRegistroAutomatico(pagoID)
+    {
+        
+    }
+
     /**
      * @description Obtiene la promesa para poder conectar a la DB
      */
