@@ -247,13 +247,13 @@ class MySQL
      * @param {number} accountEntradaID 
      * @param {number} accountSalidaID 
      */
-    setTransaccionProgramada(titulo, cantidad, recurrenciaID, accountEntradaID, accountSalidaID)
+    setPagoRecurrente(titulo, cantidad, fecha, recurrenciaID, accountEntradaID, accountSalidaID)
     {
         return new Promise((resolve, reject) => {
             this.connectMySQL().then(connection => {
 
-                let query = `INSERT INTO pagos_automaticos(titulo, cantidad, recurrencia_id, account_entrada, account_salida) 
-                VALUES ('${titulo}', ${cantidad}, ${recurrenciaID}, ${accountEntradaID}, ${accountSalidaID})`;
+                let query = `INSERT INTO pagos_automaticos(titulo, cantidad, fecha, recurrencia_id, account_entrada, account_salida) 
+                VALUES ('${titulo}', ${cantidad}, '${fecha}', ${recurrenciaID}, ${accountEntradaID}, ${accountSalidaID})`;
 
                 connection.query(query, [], (error, result) => {
                     if(error)
@@ -269,7 +269,7 @@ class MySQL
      * @description Desactiva un pago recurrente
      * @param {number} pagoID 
      */
-    disabledTransaccionProgramada(pagoID)
+    disabledPagoRecurrente(pagoID)
     {
         return new Promise((resolve, reject) => {
             this.connectMySQL().then(connection => {
@@ -287,6 +287,8 @@ class MySQL
             });
         });
     }
+
+    //getPagosRecurrentes(id)
 
     /**
      * @description Obtiene la promesa para poder conectar a la DB

@@ -1,7 +1,7 @@
 const MySQL = require('../model/bbva');
 
 module.exports = {
-    setTransaccionProgramada: (titulo, cantidad, recurrenciaID, accountEntradaID, accountSalidaID) => {
+    setPagoRecurrente: (titulo, cantidad, recurrenciaID, accountEntradaID, accountSalidaID) => {
         return new Promise((resolve, reject) => {
             let mysql = new MySQL();
 
@@ -23,7 +23,7 @@ module.exports = {
             });
         });
     },
-    disabledTransaccionProgramada: (id) => {
+    disabledPagoRecurrente: (id) => {
         return new Promise((resolve, reject) => {
             let mysql = new MySQL();
 
