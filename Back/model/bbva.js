@@ -192,6 +192,30 @@ class MySQL
     }
 
     /**
+     * @description Obtiene una lista de contactos a partir de un id
+     * @param {number} id 
+     */
+    getContactos(id)
+    {
+        return new Promise((resolve, reject) => {
+            this.mysqlObject().then(connection => {
+
+                let query = `SELECT u.id AS idUser, a.id AS idAccount, CONCAT(u.nombre, ' ', u.apellido) AS nombre, a.numero
+                FROM users u
+                JOIN accounts a ON a.user_id = u.id
+                WHERE u.id <> ${id}`;
+
+                connection.query(query, [], (error, result) => {
+                    if(error)
+                        reject(error);
+                    else
+                        resolve(result);
+                });
+            });
+        });
+    }
+
+    /**
      * @description Obtiene la promesa para poder conectar a la DB
      */
     connectMySQL()

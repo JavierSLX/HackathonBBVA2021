@@ -10,7 +10,10 @@ CREATE TABLE credential
 );
 
 INSERT INTO credential (pass) VALUES ('12345');
-INSERT INTO credential (pass) VALUES ('abcde');
+INSERT INTO credential (pass) VALUES ('oscarm');
+INSERT INTO credential (pass) VALUES ('adiim');
+INSERT INTO credential (pass) VALUES ('virio');
+INSERT INTO credential (pass) VALUES ('rafam');
 
 CREATE TABLE users
 (
@@ -21,7 +24,10 @@ CREATE TABLE users
 );
 
 INSERT INTO users(nombre, apellido, credential_id) VALUES ('Javier', 'Serrano', 1);
-INSERT INTO users(nombre, apellido, credential_id) VALUES ('Samuel', 'García', 2);
+INSERT INTO users(nombre, apellido, credential_id) VALUES ('Oscar', 'Martínez', 2);
+INSERT INTO users(nombre, apellido, credential_id) VALUES ('Adriana', 'Molina', 3);
+INSERT INTO users(nombre, apellido, credential_id) VALUES ('Viridiana', 'Ortiz', 4);
+INSERT INTO users(nombre, apellido, credential_id) VALUES ('Rafael', 'Mendoza', 5);
 
 CREATE TABLE accounts
 (
@@ -29,15 +35,57 @@ CREATE TABLE accounts
     numero VARCHAR(10) NOT NULL,
     tarjeta VARCHAR(12) NOT NULL,
     clabe VARCHAR(18) NOT NULL,
-    saldo DOUBLE NOT NULL,
     user_id INT UNSIGNED REFERENCES users(id)
 );
 
-INSERT INTO accounts(numero, tarjeta, clabe, saldo, user_id) VALUES ('1579234467', '415231678965', '012264829712578815', 543.67, 1);
-INSERT INTO accounts(numero, tarjeta, clabe, saldo, user_id) VALUES ('3451234551', '415283667125', '017263726732352455', 1450.34, 1);
-INSERT INTO accounts(numero, tarjeta, clabe, saldo, user_id) VALUES ('3768819231', '415276276316', '012376723725324222', 23098.29, 2);
-INSERT INTO accounts(numero, tarjeta, clabe, saldo, user_id) VALUES ('3878127661', '415725653451', '018719092989283799', 124561.12, 2);
-INSERT INTO accounts(numero, tarjeta, clabe, saldo, user_id) VALUES ('1872863762', '415276376251', '018723087821379919', 23452.10, 2);
+INSERT INTO accounts(numero, tarjeta, clabe, user_id) VALUES ('1579234467', '415231678965', '012264829712578815', 1);
+INSERT INTO accounts(numero, tarjeta, clabe, user_id) VALUES ('3451234551', '415283667125', '017263726732352455', 1);
+INSERT INTO accounts(numero, tarjeta, clabe, user_id) VALUES ('3768819231', '415276276316', '012376723725324222', 2);
+INSERT INTO accounts(numero, tarjeta, clabe, user_id) VALUES ('3878127661', '415725653451', '018719092989283799', 2);
+INSERT INTO accounts(numero, tarjeta, clabe, user_id) VALUES ('1872863762', '415276376251', '018723087821379919', 2);
+
+INSERT INTO accounts(numero, tarjeta, clabe, user_id) VALUES ('3748215231', '415482486316', '012376723725324222', 3);
+INSERT INTO accounts(numero, tarjeta, clabe, user_id) VALUES ('3815245161', '415575454451', '018719092989283799', 4);
+INSERT INTO accounts(numero, tarjeta, clabe, user_id) VALUES ('1478454762', '415554244551', '018723087821379919', 5);
+
+CREATE TABLE categoria
+(
+	id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(20) NOT NULL,
+    activado BOOLEAN DEFAULT TRUE
+);
+
+INSERT INTO categoria(nombre) VALUES ('Transferencia');
+INSERT INTO categoria(nombre) VALUES ('Salida');
+
+CREATE TABLE saldo_corte
+(
+	id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    cantidad DOUBLE NOT NULL,
+    fecha DATETIME DEFAULT now(),
+    activado BOOLEAN DEFAULT TRUE,
+    account_id INT UNSIGNED REFERENCES account(id)
+);
+
+INSERT INTO saldo_corte(cantidad, account_id) VALUES (10000, 1);
+INSERT INTO saldo_corte(cantidad, account_id) VALUES (15500, 2);
+INSERT INTO saldo_corte(cantidad, account_id) VALUES (16300, 3);
+INSERT INTO saldo_corte(cantidad, account_id) VALUES (5250, 4);
+INSERT INTO saldo_corte(cantidad, account_id) VALUES (74200, 5);
+
+CREATE TABLE movimientos
+(
+	id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    cantidad DOUBLE NOT NULL,
+    fecha DATETIME DEFAULT now(),
+    account_entrada INT UNSIGNED REFERENCES users(id),
+    account_salida INT UNSIGNED REFERENCES users(id),
+    categoria_id INT UNSIGNED REFERENCES categoria(id)
+);
+
+INSERT INTO movimientos(cantidad, account_entrada, account_salida, categoria_id) VALUES (500, 1, 3, 1);
+INSERT INTO movimientos(cantidad, account_entrada, account_salida, categoria_id) VALUES (1520, 4, 5, 1);
+INSERT INTO movimientos(cantidad, account_entrada, account_salida, categoria_id) VALUES (875, 1, 3, 1);
 
 CREATE TABLE promociones
 (
@@ -79,3 +127,9 @@ INSERT INTO user_promo(user_id, promocion_id) VALUES (2, 2);
 INSERT INTO user_promo(user_id, promocion_id) VALUES (2, 5);
 INSERT INTO user_promo(user_id, promocion_id) VALUES (2, 7);
 INSERT INTO user_promo(user_id, promocion_id) VALUES (2, 9);
+
+CREATE TABLE pagos_automaticos
+(
+	id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    accounts_id INT UNSIGNED REFERENCES accounts(id)
+);
