@@ -216,6 +216,30 @@ class MySQL
     }
 
     /**
+     * @description Obtiene una lista de la recurrencia de los pagos automaticos
+     * @param {number} id 
+     * @param {string} nombre 
+     */
+    getRecurrencia()
+    {
+        return new Promise((resolve, reject) => {
+            this.connectMySQL().then(connection => {
+
+                let query = `SELECT id, nombre
+                FROM recurrencia
+                WHERE activo = TRUE`;
+    
+                connection.query(query, [], (error, result) => {
+                    if(error)
+                        reject(error);
+                    else
+                        resolve(result);
+                });
+            });
+        });
+    }
+
+    /**
      * @description Inserta un pago de manera automatica
      * @param {string} titulo 
      * @param {number} cantidad 

@@ -11,5 +11,16 @@ module.exports = {
                 reject(error);
             });
         });
+    },
+    getRecurrencia: () => {
+        return new Promise((resolve, reject) => {
+            let mysql = new MySQL();
+
+            mysql.getRecurrencia().then(result => {
+                resolve(result);
+            }).catch(error => {
+                reject(error);
+            });
+        });
     }
 }
