@@ -37,5 +37,16 @@ module.exports = {
                 reject(error);
             });
         });
+    },
+    getPagosRecurrentes: (id) => {
+        return new Promise((resolve, reject) => {
+            let mysql = new MySQL();
+
+            mysql.getPagosRecurrentes(id).then(result => {
+                resolve(result);
+            }).catch(error => {
+                reject(error);
+            });
+        });
     }
 }

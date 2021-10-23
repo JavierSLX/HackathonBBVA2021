@@ -288,7 +288,37 @@ class MySQL
         });
     }
 
-    //getPagosRecurrentes(id)
+    /**
+     * @description Obtiene una lista de pagos recurrentes del usuario
+     * @param {number} userID 
+     */
+    getPagosRecurrentes(userID)
+    {
+        return new Promise((resolve, reject) => {
+            this.connectMySQL().then(connection => {
+
+                let query = `SELECT p.id, p.titulo, c.contacto, p.cantidad, a.numero AS cuenta, date_format(p.fecha, '%d-%m-%Y') AS fecha, r.nombre AS recurrencia
+                FROM (SELECT pa.id, CONCAT(us.nombre, ' ', us.apellido) AS contacto
+                    FROM pagos_automaticos pa
+                    JOIN accounts ac ON ac.id = pa.account_entrada
+                    JOIN users us ON us.id= ac.user_id
+                    AND pa.account_entrada = account_entrada) AS c
+                JOIN pagos_automaticos p ON c.id = p.id
+                JOIN recurrencia r ON p.recurrencia_id = r.id
+                JOIN accounts a ON a.id = p.account_salida
+                JOIN users u ON u.id = a.user_id
+                WHERE p.activo = TRUE
+                AND u.id = ${userID}`;
+
+                connection.query(query, [], (error, result) => {
+                    if(error)
+                        reject(error);
+                    else
+                        resolve(result);
+                });
+            });
+        });
+    }
 
     /**
      * @description Obtiene la promesa para poder conectar a la DB

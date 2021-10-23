@@ -1,5 +1,5 @@
 const path = require('path');
-const {setPagoRecurrente, getRecurrencia, disabledPagoRecurrente} = require('../../../controller/hackController');
+const {setPagoRecurrente, getRecurrencia, disabledPagoRecurrente, getPagosRecurrentes} = require('../../../controller/hackController');
 
 module.exports = (app) => {
     //Peticion que permite registrar un pago recurrente
@@ -29,6 +29,18 @@ module.exports = (app) => {
 
         let query = request.query;
         disabledPagoRecurrente(query.id).then(result => {
+            response.status(200).json({codigo: 0, data: result})
+        }).catch(error => {
+            console.log(error);
+            response.status(500).json({codigo: 1, data: "Error"});
+        });
+    });
+
+    //Peticion que trae la lista de pagos recurrentes
+    app.post("/bbva/pagos", (request, response) => {
+        let body = request.body;
+
+        getPagosRecurrentes(body.id).then(result => {
             response.status(200).json({codigo: 0, data: result})
         }).catch(error => {
             console.log(error);
