@@ -19,6 +19,6 @@ const server = app.listen(15000, () => {
 });
 
 //Realiza los pagos programados a ese día
-cron.schedule('* * 6 * * *', () => {
+/*cron.schedule('* * 6 * * *', () => {
     
-});
+});*/
