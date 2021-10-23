@@ -1,3 +1,4 @@
+const { query } = require('express');
 const mysql = require('mysql');
 const {mysqlHost, mysqlPass, mysqlPort, mysqlDB, mysqlUser} = require('./config');
 
@@ -72,6 +73,30 @@ class MySQL
                 let query = `SELECT id, numero, tarjeta, clabe, saldo, user_id\
                 FROM accounts
                 WHERE user_id = ${id}`;
+
+                connection.query(query, [], (error, result) => {
+                    if(error)
+                        reject(error);
+                    else
+                        resolve(result);
+                });
+            });
+        });
+    }
+
+    /**
+     * @description Permite la obtencion de los saldos al corte
+     * @param {number} id 
+     */
+    getSaldoUser(id)
+    {
+        return new Promise((resolve, reject) => {
+            this.connectMySQL().then(connection => {
+
+                let query = `SELECT s.cantidad, a.numero, a.tarjeta
+                FROM saldo_corte s
+                JOIN accounts a ON s.account_id = a.id
+                WHERE a.user_id = ${id}`;
 
                 connection.query(query, [], (error, result) => {
                     if(error)
