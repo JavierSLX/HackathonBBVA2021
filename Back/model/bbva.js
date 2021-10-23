@@ -216,6 +216,32 @@ class MySQL
     }
 
     /**
+     * @description Inserta un pago de manera automatica
+     * @param {string} titulo 
+     * @param {number} cantidad 
+     * @param {string} fecha 
+     * @param {number} accountEntradaID 
+     * @param {number} accountSalidaID 
+     */
+    setTransaccionProgramada(titulo, cantidad, recurrenciaID, accountEntradaID, accountSalidaID)
+    {
+        return new Promise((resolve, reject) => {
+            this.connectMySQL().then(connection => {
+
+                let query = `INSERT INTO pagos_automaticos(titulo, cantidad, recurrencia_id, account_entrada, account_salida) 
+                VALUES ('${titulo}', ${cantidad}, ${recurrenciaID}, ${accountEntradaID}, ${accountSalidaID})`;
+
+                connection.query(query, [], (error, result) => {
+                    if(error)
+                        reject(error);
+                    else
+                        resolve(result);
+                });
+            });
+        });
+    }
+
+    /**
      * @description Obtiene la promesa para poder conectar a la DB
      */
     connectMySQL()
