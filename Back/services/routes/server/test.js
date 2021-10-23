@@ -1,5 +1,5 @@
 const path = require('path');
-const {setTransaccionProgramada, getRecurrencia} = require('../../../controller/testController');
+const {setTransaccionProgramada, getRecurrencia, disabledTransaccionProgramada} = require('../../../controller/testController');
 
 module.exports = (app) => {
     //Peticion que inserta valores
@@ -17,6 +17,18 @@ module.exports = (app) => {
     //Peticion que trae la lista de recurrencia
     app.get("/bbva/recurrencia", (request, response) => {
         getRecurrencia().then(result => {
+            response.status(200).json({codigo: 0, data: result})
+        }).catch(error => {
+            console.log(error);
+            response.status(500).json({codigo: 1, data: "Error"});
+        });
+    });
+
+    //Peticion que deshabilita un pago recurrente
+    app.get("/bbva/recurrencia/disabled", (request, response) => {
+
+        let query = request.query;
+        disabledTransaccionProgramada(query.id).then(result => {
             response.status(200).json({codigo: 0, data: result})
         }).catch(error => {
             console.log(error);

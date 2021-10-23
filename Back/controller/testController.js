@@ -22,5 +22,16 @@ module.exports = {
                 reject(error);
             });
         });
+    },
+    disabledTransaccionProgramada: (id) => {
+        return new Promise((resolve, reject) => {
+            let mysql = new MySQL();
+
+            mysql.disabledTransaccionProgramada(id).then(result => {
+                resolve(result);
+            }).catch(error => {
+                reject(error);
+            });
+        });
     }
 }

@@ -266,6 +266,29 @@ class MySQL
     }
 
     /**
+     * @description Desactiva un pago recurrente
+     * @param {number} pagoID 
+     */
+    disabledTransaccionProgramada(pagoID)
+    {
+        return new Promise((resolve, reject) => {
+            this.connectMySQL().then(connection => {
+
+                let query = `UPDATE pagos_automaticos
+                SET activo = false
+                WHERE id = ${pagoID}`;
+
+                connection.query(query, [], (error, result) => {
+                    if(error)
+                        reject(error);
+                    else
+                        resolve(result);
+                });
+            });
+        });
+    }
+
+    /**
      * @description Obtiene la promesa para poder conectar a la DB
      */
     connectMySQL()
