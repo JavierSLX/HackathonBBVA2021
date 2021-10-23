@@ -198,7 +198,7 @@ class MySQL
     getContactos(id)
     {
         return new Promise((resolve, reject) => {
-            this.mysqlObject().then(connection => {
+            this.connectMySQL().then(connection => {
 
                 let query = `SELECT u.id AS idUser, a.id AS idAccount, CONCAT(u.nombre, ' ', u.apellido) AS nombre, a.numero
                 FROM users u
