@@ -70,7 +70,7 @@ class MySQL
         return new Promise((resolve, reject) => {
             this.connectMySQL().then(connection => {
 
-                let query = `SELECT id, numero, tarjeta, clabe, saldo, user_id\
+                let query = `SELECT id, numero, tarjeta, clabe, user_id\
                 FROM accounts
                 WHERE user_id = ${id}`;
 
@@ -97,6 +97,37 @@ class MySQL
                 FROM saldo_corte s
                 JOIN accounts a ON s.account_id = a.id
                 WHERE a.user_id = ${id}`;
+
+                connection.query(query, [], (error, result) => {
+                    if(error)
+                        reject(error);
+                    else
+                        resolve(result);
+                });
+            });
+        });
+    }
+
+    /**
+     * @description Permite la obtencion de la suma de un determinado movimiento
+     * @param {number} id
+     * @param {string} option
+     */
+    getMovimientos(id, option)
+    {
+        return new Promise((resolve, reject) => {
+            this.connectMySQL().then(connection => {
+                let query = `SELECT SUM(m.cantidad) as cantidad
+                FROM movimientos m
+                JOIN categoria c ON m.categoria_id = c.id `
+                
+                if(option == 'Transferencia')
+                    query += `JOIN accounts a ON m.account_entrada = a.id `;
+                else
+                    query += `JOIN accounts a ON m.account_salida = a.id `
+
+                query += `WHERE a.id = ${id}
+                AND c.nombre = '${option}'`;
 
                 connection.query(query, [], (error, result) => {
                     if(error)

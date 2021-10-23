@@ -34,12 +34,21 @@ module.exports = {
             {
                 let result = await mysql.getAccounts(id);
                 let saldoCorte = await mysql.getSaldoUser(id);
+                
 
                 //Realiza los cambios para dar el saldo de acuerdo al calculo
                 for(let i = 0; i < result.length; i++)
                 {
                     let account = result[i];
-                    account.saldo = saldoCorte[i].cantidad;
+
+                    //Saca los depositos y salidas de saldo de cada cuenta del usuario
+                    let depositos = await mysql.getMovimientos(account.id, 'Transferencia');
+                    let salidas = await mysql.getMovimientos(account.id, 'Salida');
+
+                    depositos = depositos[0].cantidad == null ? 0 : depositos[0].cantidad;
+                    salidas = salidas[0].cantidad == null ? 0 : salidas[0].cantidad;
+
+                    account.saldo = saldoCorte[i].cantidad + depositos + salidas;
                 }
 
                 resolve(result);
