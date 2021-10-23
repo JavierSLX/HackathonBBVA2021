@@ -3,7 +3,7 @@ const {setPagoRecurrente, getRecurrencia, disabledPagoRecurrente} = require('../
 
 module.exports = (app) => {
     //Peticion que inserta valores
-    app.post("/bbva/tareaprogramada", (request, response) => {
+    /*app.post("/bbva/tareaprogramada", (request, response) => {
         let body = request.body;
 
         setPagoRecurrente(body.titulo, body.cantidad, body.recurrenciaID, body.entradaID, body.salidaID).then(result => {
@@ -34,5 +34,5 @@ module.exports = (app) => {
             console.log(error);
             response.status(500).json({codigo: 1, data: "Error"});
         });
-    });
+    });*/
 }
