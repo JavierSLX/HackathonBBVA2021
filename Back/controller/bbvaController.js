@@ -1,7 +1,9 @@
 const MySQL = require("../model/bbva");
  function getDatosCuenta(array) {
     return new Promise( async(resolve, reject) => {
+        console.log(array)
         let arrayCuenta = array.split(',')
+       
 
         let info =[];
         let elemento='';
@@ -10,20 +12,21 @@ const MySQL = require("../model/bbva");
 
         for (var i =0; i<(Object.keys(arrayCuenta).length); i++){
         elemento += arrayCuenta[i]
-        if((i+1)%3 == 0)
-            elemento += ":"
-        else
-            elemento +=","
-
+            if((i+1)%2 == 0)
+                elemento += ":"
+            else
+                elemento +=","
+        
+    
+        }
         elemento = elemento.slice(':',-1)
 
         nivel1 = elemento.split(':')
-       
-        
-        }
-
         for(var r = 0; r<Object.keys(nivel1).length; r++){
             nivel2 =nivel1[r].split(',')
+            console.log(nivel1)
+            //console.log(nivel2)
+         
             
             info.push({
                 'idAcount': nivel2[0],
@@ -131,12 +134,9 @@ module.exports = {
             mysql.getContactosUser(id).then(async result => {
                 let datos = result;
                 let resultado = [];
-                let idUser;
-                let idAccount;
-                let nombre;
-                let numero
-                console.log(datos)
-                for(var r = 0; r<datos.length; r++){
+
+               for(var r = 0; r<datos.length; r++){
+               
 
                     resultado.push({
                         "idUser":datos[r].idUser,
