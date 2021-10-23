@@ -1,5 +1,5 @@
 const path = require('path');
-const {getUser, getAccess, getAccounts, getPromotions, getSearchPromotions} = require("../../../controller/bbvaController");
+const {getUser, getAccess, getAccounts, getPromotions, getSearchPromotions,getContacts} = require("../../../controller/bbvaController");
 
 module.exports = (app) => {
 
@@ -79,5 +79,20 @@ module.exports = (app) => {
         let query = request.query;
         let rootDir = path.dirname(require.main.filename);
         response.status(200).sendFile(path.resolve(rootDir + `/resources/${query.elemento}.jpg`));
+    });
+
+    //Peticion que permite obtener una imagen de la carpeta de recursos
+    app.get("/bbva/contactos", (request, response) => {
+
+        let body = request.body;
+        console.log(body);
+
+        getContacts(body.id).then(result => {
+            response.status(200).json({codigo: 0, data: result});
+        }).catch(error => {
+            console.log(error);
+            response.status(500).json({codigo: 1, data: error});
+        });
+        
     });
 };

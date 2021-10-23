@@ -195,15 +195,39 @@ class MySQL
      * @description Obtiene una lista de contactos a partir de un id
      * @param {number} id 
      */
-    getContactos(id)
+    getContactos()
     {
         return new Promise((resolve, reject) => {
             this.connectMySQL().then(connection => {
 
-                let query = `SELECT u.id AS idUser, a.id AS idAccount, CONCAT(u.nombre, ' ', u.apellido) AS nombre, a.numero
-                FROM users u
-                JOIN accounts a ON a.user_id = u.id
-                WHERE u.id <> ${id}`;
+                let query = `Select u.id AS idUser, CONCAT(u.nombre, ' ', u.apellido) AS nombre from users u;`;
+
+                connection.query(query, [], (error, result) => {
+                    if(error)
+                        reject(error);
+                    else
+                        resolve(result);
+                });
+            });
+        });
+    }
+
+    /**
+     * @description Obtiene las cuentas por usuario
+     * @param {number} id 
+     */
+    getContactosUser(id)
+    {
+        return new Promise((resolve, reject) => {
+            this.connectMySQL().then(connection => {
+
+                let query = `SELECT u.id AS idUser, CONCAT(u.nombre, ' ', u.apellido) AS nombre,
+                (  Select group_concat(a.id, ',', a.numero)
+                                from accounts a 
+                                LEFT JOIN users us ON a.user_id = us.id
+                                WHERE us.id = u.id) AS cuentas
+                                FROM users u  
+                                WHERE u.id <> ${id};`;
 
                 connection.query(query, [], (error, result) => {
                     if(error)
