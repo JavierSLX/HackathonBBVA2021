@@ -80,4 +80,16 @@ module.exports = (app) => {
         let rootDir = path.dirname(require.main.filename);
         response.status(200).sendFile(path.resolve(rootDir + `/resources/${query.elemento}.jpg`));
     });
+
+    //Peticion que permite obtener las tareas programadas
+    app.post("/bbva/registroTarea", (request, response) => {
+
+        let body = request.body;
+        getTask(body.id, body.titulo, body.cantidad, body.fecha, body.repetir, body.activo, body.contacto, numero_cuenta).then(result => {
+            response.status(200).json({codigo: 0, data: result});
+        }).catch(error => {
+            console.log(error);
+            response.status(500).json({codigo: 1, data: error})
+        })
+    } )
 };

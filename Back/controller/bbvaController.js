@@ -81,5 +81,18 @@ module.exports = {
                 reject(error);
             });
         });
+    },
+    getTask:(id, titulo, cantidad, fecha, repetir, activo, contacto, numero_cuenta) =>{
+        return new Promise((resolve, reject) => {
+
+            let mysql = new MySQL();
+
+            mysql.getTask(id, titulo, cantidad, fecha, repetir, activo, contacto, numero_cuenta).then(result => {
+                resolve(result);
+            }).catch(error => {
+                reject(error)
+            })
+        })
+        
     }
 }
