@@ -20,7 +20,7 @@ const server = app.listen(15000, () => {
 });
 
 //Realiza los pagos programados a ese día
-cron.schedule('00 50 * * * *', async () => {
+cron.schedule('00 50 6 * * *', async () => {
 
     //Saca la fecha del día de hoy
     let fechaNumber = Date.now();
@@ -64,3 +64,19 @@ cron.schedule('00 50 * * * *', async () => {
         console.log(error);
     }
 });
+
+function addDaysDate(fecha, recurrenciaID)
+{
+    let date = new Date(fecha);
+
+   switch(recurrenciaID)
+   {
+       case 2:
+           date.setDate(date.getDate() + 1);
+           break;
+   } 
+
+   return date;
+}
+
+console.log(addDaysDate('2021-10-23', 2).toLocaleDateString());
