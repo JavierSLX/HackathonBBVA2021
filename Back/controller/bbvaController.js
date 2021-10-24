@@ -154,7 +154,8 @@ module.exports = {
     }
 }
 
-function fechaSiguiente(){
+//fecha 2021-10-23
+function fechaSiguiente(fecha, id){
     var fecha = new Date();
     var anoActual = fecha.getFullYear();
     var mes  = fecha.getMonth() + 1

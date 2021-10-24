@@ -65,6 +65,12 @@ cron.schedule('00 50 6 * * *', async () => {
     }
 });
 
+Date.prototype.addDays = function (days) {
+    const date = new Date(this.valueOf());
+    date.setDate(date.getDate() + days);
+    return date;
+}
+
 function addDaysDate(fecha, recurrenciaID)
 {
     let date = new Date(fecha);
@@ -72,7 +78,7 @@ function addDaysDate(fecha, recurrenciaID)
    switch(recurrenciaID)
    {
        case 2:
-           date.setDate(date.getDate() + 1);
+           date = date.addDays(1);
            break;
    } 
 
