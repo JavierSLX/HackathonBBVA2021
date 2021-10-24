@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const logger = require("morgan");
 const cron = require("node-cron");
 const {getPagosRecurrentesPorFecha, setMovimiento, setRegistroAutomatico, disabledPagoRecurrente} = require('./controller/hackController');
+const {fechaSiguiente} = require('./controller/bbvaController');
 
 const app = express();
 
@@ -65,24 +66,4 @@ cron.schedule('00 50 6 * * *', async () => {
     }
 });
 
-Date.prototype.addDays = function (days) {
-    const date = new Date(this.valueOf());
-    date.setDate(date.getDate() + days);
-    return date;
-}
-
-function addDaysDate(fecha, recurrenciaID)
-{
-    let date = new Date(fecha);
-
-   switch(recurrenciaID)
-   {
-       case 2:
-           date = date.addDays(1);
-           break;
-   } 
-
-   return date;
-}
-
-console.log(addDaysDate('2021-10-23', 2).toLocaleDateString());
+console.log(fechaSiguiente('2021-10-23', 2));

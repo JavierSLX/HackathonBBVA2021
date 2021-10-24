@@ -151,7 +151,8 @@ module.exports = {
                 reject(error);
             });
         });
-    }
+    },
+    fechaSiguiente: fechaSiguiente
 }
 
 function fechaSiguiente(fechaEnvio, id){
