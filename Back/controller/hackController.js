@@ -70,5 +70,17 @@ module.exports = {
                 reject(error);
             });
         });
+    },
+    setMovimiento: (cantidad, accountEntradaID, accountSalidaID, categoriaID) => {
+        return new Promise((resolve, reject) => {
+            let mysql = new MySQL();
+
+            mysql.setMovimiento(cantidad, accountEntradaID, accountSalidaID, categoriaID).then(result => {
+                let resultado = {"mensaje": "Registro exitoso!", "id": result.insertId};
+                resolve(resultado);
+            }).catch(error => {
+               reject(error);
+            });
+        });
     }
 }
