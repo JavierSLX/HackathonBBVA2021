@@ -153,3 +153,92 @@ module.exports = {
         });
     }
 }
+
+function fechaSiguiente(){
+    var fecha = new Date();
+    var anoActual = fecha.getFullYear();
+    var mes  = fecha.getMonth() + 1
+    var dia = fecha.getDate()
+
+    //dias del mes
+    function diasEnUnMes(mes, anoActual) {
+        return new Date(anoActual, mes, 0).getDate();
+    }
+
+    //entra si es diferenete a 1 (unico)
+    if( id !== 1){
+        switch(id){
+            case 2:
+                if(dia !== diasEnUnMes(mes, anoActual)){
+                    var nuevoDia = diasEnUnMes(mes, anoActual) + 1 + "/" + mes + "/" + anoActual
+                }else{  
+                    var nuevoDia = 1 + "/" + mes + "/" + anoActual
+                }
+                break;
+            case 3:
+                if(dia + 7 <= diasEnUnMes(mes, anoActual)){
+                    var nuevoDia = diasEnUnMes(mes, anoActual) + 7 + "/" + mes + "/" + anoActual
+                }else{
+                    if(mes === 12){
+                        mes = 1
+                        anoActual = anoActual + 1
+                    }else{
+                        mes = mes + 1
+                    }
+                    var restaDia = diasEnUnMes(mes, anoActual) - dia;
+                    var nuevoDia = 7 - restaDia + "/" + mes + "/" + anoActual
+                }
+                break;
+            case 4:
+                if(dia + 14 <= diasEnUnMes(mes, anoActual)){
+                    var nuevoDia = diasEnUnMes(mes, anoActual) + 14 + "/" + mes + "/" + anoActual
+                }else{
+                    if(mes === 12){
+                        mes = 1
+                        anoActual = anoActual + 1
+                    }else{
+                        mes = mes + 1
+                    }
+                    var restaDia = diasEnUnMes(mes, anoActual) - dia;
+                    var nuevoDia = 14 - restaDia + "/" + mes + "/" + anoActual
+                }
+                break;
+            case 5:
+                if(mes === 12){
+                    mes = 1
+                    anoActual = anoActual + 1
+                }else{
+                    mes = mes + 1
+                }
+                var existe = true
+                for(var i = 0; i < diasEnUnMes(mes, anoActual); i++){
+                    if(dia === i){
+                        existe = true
+                    }else{
+                        existe = false
+                    }
+                }
+                if(existe === true){
+                    var nuevoDia = dia + "/" + mes + "/" + anoActual
+                }else{
+                    var nuevoDia = diasEnUnMes(mes, anoActual) + "/" + mes + "/" + anoActual
+                }
+                break;
+            case 6:
+                var existe = true
+                for(var i = 0; i < diasEnUnMes(mes, anoActual + 1); i++){
+                    if(dia === i){
+                        existe = true
+                    }else{
+                        existe = false
+                    }
+                }
+                if(existe === true){
+                    var nuevoDia = dia + "/" + mes + "/" + anoActual
+                }else{
+                    var nuevoDia = diasEnUnMes(mes, anoActual + 1) + "/" + mes + "/" + anoActual
+                }
+                break;
+        }
+    }
+}
