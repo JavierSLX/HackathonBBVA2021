@@ -44,7 +44,6 @@ INSERT INTO accounts(numero, tarjeta, clabe, principal, user_id) VALUES ('345123
 INSERT INTO accounts(numero, tarjeta, clabe, principal, user_id) VALUES ('3768819231', '415276276316', '012376723725324222', true, 2);
 INSERT INTO accounts(numero, tarjeta, clabe, principal, user_id) VALUES ('3878127661', '415725653451', '018719092989283799', false, 2);
 INSERT INTO accounts(numero, tarjeta, clabe, principal, user_id) VALUES ('1872863762', '415276376251', '018723087821379919', false, 2);
-
 INSERT INTO accounts(numero, tarjeta, clabe, principal, user_id) VALUES ('3748215231', '415482486316', '012376723725324222', true, 3);
 INSERT INTO accounts(numero, tarjeta, clabe, principal, user_id) VALUES ('3815245161', '415575454451', '018719092989283799', true, 4);
 INSERT INTO accounts(numero, tarjeta, clabe, principal, user_id) VALUES ('1478454762', '415554244551', '018723087821379919', true, 5);
