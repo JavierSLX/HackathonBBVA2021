@@ -2,7 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const logger = require("morgan");
 const cron = require("node-cron");
-const {getPagosRecurrentesPorFecha, setMovimiento, setRegistroAutomatico, disabledPagoRecurrente} = require('./controller/hackController');
+const {getPagosRecurrentesPorFecha, setMovimiento, setRegistroAutomatico, disabledPagoRecurrente, updateDatePagoRecurrente} = require('./controller/hackController');
 const {fechaSiguiente} = require('./controller/bbvaController');
 
 const app = express();
@@ -49,7 +49,9 @@ cron.schedule('00 50 6 * * *', async () => {
             //Saca la nueva fecha si el pago no es unico
             if(pago.recurrencia_id != 1)
             {
-                //FALTA POR EL PINCHE RAFA!!! ¬¬
+                let fechaUpdate = fechaSiguiente(fecha, pago.recurrencia_id);
+                let actualizacion = await updateDatePagoRecurrente(pago.id, fechaUpdate);
+                actualizaciones.push(actualizacion);
             }
             else
             {
@@ -59,6 +61,7 @@ cron.schedule('00 50 6 * * *', async () => {
         }
         
         console.log(`Se hicieron ${transacciones.length} movimiento/s el día ${fecha}`);
+        console.log(`Se hicieron ${actualizaciones.length} actualizacion/es`);
         
     }catch(error)
     {
@@ -66,4 +69,4 @@ cron.schedule('00 50 6 * * *', async () => {
     }
 });
 
-console.log(fechaSiguiente('2021-10-23', 2));
+console.log(fechaSiguiente('2021-10-31', 6));
