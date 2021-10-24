@@ -186,7 +186,7 @@ function fechaSiguiente(fechaEnvio, id){
                     if(mes <= 9){
                         mes = "0" + mes
                     }
-                    console.log(nuevoDia = anoActual + "-" + mes + "-" + 1)
+                    return nuevoDia = anoActual + "-" + mes + "-" + 1
                 }else{ 
                     var sumaDia = parseInt(dia) + 1
                     if(sumaDia <= 9){
@@ -195,7 +195,7 @@ function fechaSiguiente(fechaEnvio, id){
                     if(mes <= 9){
                         mes = "0" + mes
                     }
-                    console.log(nuevoDia = anoActual + "-" + mes + "-" + sumaDia)
+                    return nuevoDia = anoActual + "-" + mes + "-" + sumaDia
                 }
                 break;
             case 3:
@@ -207,7 +207,7 @@ function fechaSiguiente(fechaEnvio, id){
                     if(mes <= 9){
                         mes = "0" + mes
                     }
-                    console.log(nuevoDia = anoActual + "-" + mes + "-" + sumaDia)
+                    return nuevoDia = anoActual + "-" + mes + "-" + sumaDia
                 }else{
                     if(mes === 12){
                         mes = 1
@@ -223,13 +223,13 @@ function fechaSiguiente(fechaEnvio, id){
                     if(mes <= 9){
                         mes = "0" + mes
                     }
-                    console.log(nuevoDia = anoActual + "-" + mes + "-" + dias)
+                    return nuevoDia = anoActual + "-" + mes + "-" + dias
                 }
                 break;
             case 4:
                 if(dia + 14 <= diasEnUnMes(mes, anoActual)){
                     var sumaDia = dia + 14
-                    console.log(nuevoDia = anoActual + "-" + mes + "-" + sumaDia)
+                    return nuevoDia = anoActual + "-" + mes + "-" + sumaDia
                 }else{
                     if(mes === 12){
                         mes = 1
@@ -245,7 +245,7 @@ function fechaSiguiente(fechaEnvio, id){
                     if(mes <= 9){
                         mes = "0" + mes
                     }
-                    console.log(nuevoDia = anoActual + "-" + mes + "-" + dias)
+                    return nuevoDia = anoActual + "-" + mes + "-" + dias
                 }
                 break;
             case 5:
@@ -268,9 +268,9 @@ function fechaSiguiente(fechaEnvio, id){
                     mes = "0" + mes
                 }
                 if(existe === true){
-                    console.log(nuevoDia = anoActual + "-" + mes + "-" + dia)
+                    return nuevoDia = anoActual + "-" + mes + "-" + dia
                 }else{
-                    console.log(nuevoDia = anoActual + "-" + mes + "-" + diasEnUnMes(mes, anoActual))
+                    return nuevoDia = anoActual + "-" + mes + "-" + diasEnUnMes(mes, anoActual)
                 }
                 break;
             case 6:
@@ -288,10 +288,10 @@ function fechaSiguiente(fechaEnvio, id){
                 }
                 if(existe === true){
                     var anoNuevo = anoActual + 1
-                    console.log(nuevoDia = anoNuevo + "-" + mes + "-" + dia)
+                    return nuevoDia = anoNuevo + "-" + mes + "-" + dia
                 }else{
                     var anoNuevo = anoActual + 1
-                    console.log(nuevoDia = anoNuevo + "-" + mes + "-" + diasEnUnMes(mes, anoActual + 1))
+                    return nuevoDia = anoNuevo + "-" + mes + "-" + diasEnUnMes(mes, anoActual + 1)
                 }
                 break;
         }
