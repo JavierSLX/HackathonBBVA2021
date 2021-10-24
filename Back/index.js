@@ -2,7 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const logger = require("morgan");
 const cron = require("node-cron");
-const {getPagosRecurrentesPorFecha, setMovimiento, setRegistroAutomatico} = require('./controller/hackController');
+const {getPagosRecurrentesPorFecha, setMovimiento, setRegistroAutomatico, disabledPagoRecurrente} = require('./controller/hackController');
 
 const app = express();
 
@@ -34,6 +34,7 @@ cron.schedule('00 50 * * * *', async () => {
         //Realiza los pagos programados a las cuentas
         let movimientos = new Array();
         let transacciones = new Array();
+        let actualizaciones = new Array();
         for(let i = 0; i < pagos.length; i++)
         {
             let pago = pagos[i];
@@ -43,6 +44,17 @@ cron.schedule('00 50 * * * *', async () => {
 
             let transaccion = await setRegistroAutomatico(pago.id);
             transacciones.push(transaccion.id);
+
+            //Saca la nueva fecha si el pago no es unico
+            if(pago.recurrencia_id != 1)
+            {
+                //FALTA POR EL PINCHE RAFA!!! ¬¬
+            }
+            else
+            {
+                let actualizacion = await disabledPagoRecurrente(pago.id);
+                actualizaciones.push(actualizacion);
+            }
         }
         
         console.log(`Se hicieron ${transacciones.length} movimiento/s el día ${fecha}`);

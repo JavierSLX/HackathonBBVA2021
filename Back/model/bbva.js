@@ -290,6 +290,29 @@ class MySQL
     }
 
     /**
+     * @description Actualiza la fecha del pago
+     * @param {number} pagoID 
+     * @param {string} fecha 
+     */
+    updateDatePagoRecurrente(pagoID, fecha)
+    {
+        return new Promise((resolve, reject) => {
+            this.connectMySQL().then(connection => {
+                let query = `UPDATE pagos_automaticos
+                SET fecha = '${fecha}'
+                WHERE id = ${pagoID}`;
+
+                connection.query(query, [], (error, result) => {
+                    if(error)
+                        reject(error);
+                    else
+                        resolve(result);
+                });
+            });
+        });
+    }
+
+    /**
      * @description Desactiva un pago recurrente
      * @param {number} pagoID 
      */

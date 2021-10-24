@@ -83,5 +83,17 @@ module.exports = {
                reject(error);
             });
         });
+    },
+    updateDatePagoRecurrente: (pagoID, fecha) => {
+        return new Promise((resolve, reject) => {
+            let mysql = new MySQL();
+
+            mysql.updateDatePagoRecurrente(pagoID, fecha).then(result => {
+                let resultado = {"mensaje": "Registro actualizado correctamente!", "info": `Registros afectados: ${result.affectedRows}`};
+                resolve(resultado);
+            }).catch(error => {
+                reject(error);
+            });
+        });
     }
 }
