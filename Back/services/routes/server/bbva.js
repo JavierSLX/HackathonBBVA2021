@@ -82,7 +82,7 @@ module.exports = (app) => {
     });
 
     //Peticion que permite obtener una imagen de la carpeta de recursos
-    app.get("/bbva/contactos", (request, response) => {
+    app.post("/bbva/contactos", (request, response) => {
 
         let body = request.body;
         console.log(body);
