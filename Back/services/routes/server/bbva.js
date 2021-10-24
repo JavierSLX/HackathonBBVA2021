@@ -85,7 +85,6 @@ module.exports = (app) => {
     app.post("/bbva/contactos", (request, response) => {
 
         let body = request.body;
-        console.log(body);
 
         getContacts(body.id).then(result => {
             response.status(200).json({codigo: 0, data: result});
