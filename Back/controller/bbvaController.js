@@ -1,7 +1,7 @@
 const MySQL = require("../model/bbva");
  function getDatosCuenta(array) {
     return new Promise( async(resolve, reject) => {
-        console.log(array)
+
         let arrayCuenta = array.split(',')
        
 
@@ -24,8 +24,6 @@ const MySQL = require("../model/bbva");
         nivel1 = elemento.split(':')
         for(var r = 0; r<Object.keys(nivel1).length; r++){
             nivel2 =nivel1[r].split(',')
-            console.log(nivel1)
-            //console.log(nivel2)
          
             
             info.push({
