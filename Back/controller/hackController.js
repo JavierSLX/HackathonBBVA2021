@@ -54,7 +54,8 @@ module.exports = {
             let mysql = new MySQL();
 
             mysql.setRegistroAutomatico(pagoID).then(result => {
-                resolve(result);
+                let resultado = {"mensaje": "Registro exitoso!", "id": result.insertId};
+                resolve(resultado);
             }).catch(error => {
                 reject(error);
             });

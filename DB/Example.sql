@@ -158,6 +158,6 @@ CREATE TABLE pagos_automaticos
 CREATE TABLE registros_automaticos
 (
 	id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    fecha DATETIME NOT NULL,
+    fecha DATETIME DEFAULT now(),
     pagos_id INT UNSIGNED REFERENCES pagos_automaticos(id)
 );
