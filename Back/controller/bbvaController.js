@@ -156,30 +156,35 @@ module.exports = {
     }
 }
 
-function fechaSiguiente(){
-    var fecha = new Date();
-    var anoActual = fecha.getFullYear();
-    var mes  = fecha.getMonth() + 1
-    var dia = fecha.getDate()
+function fechaSiguiente(fechaEnvio, id){
+    var fechaDescompuesta = fechaEnvio.split("-", 3)
+
+    var anoActual = fechaDescompuesta[0];
+    var mes  = fechaDescompuesta[1]
+    var dia = fechaDescompuesta[2]
+
+    console.log(fechaDescompuesta)
 
     //dias del mes
     function diasEnUnMes(mes, anoActual) {
         return new Date(anoActual, mes, 0).getDate();
     }
 
+    var nuevoDia;
+
     //entra si es diferenete a 1 (unico)
     if( id !== 1){
         switch(id){
             case 2:
                 if(dia !== diasEnUnMes(mes, anoActual)){
-                    var nuevoDia = diasEnUnMes(mes, anoActual) + 1 + "/" + mes + "/" + anoActual
+                    return nuevoDia = anoActual + "-" + mes + "-" + diasEnUnMes(mes, anoActual)
                 }else{  
-                    var nuevoDia = 1 + "/" + mes + "/" + anoActual
+                    return nuevoDia = anoActual + "-" + mes + "-" + 1
                 }
                 break;
             case 3:
                 if(dia + 7 <= diasEnUnMes(mes, anoActual)){
-                    var nuevoDia = diasEnUnMes(mes, anoActual) + 7 + "/" + mes + "/" + anoActual
+                    return nuevoDia = anoActual + "-" + mes + "-" + diasEnUnMes(mes, anoActual) + 7
                 }else{
                     if(mes === 12){
                         mes = 1
@@ -188,12 +193,12 @@ function fechaSiguiente(){
                         mes = mes + 1
                     }
                     var restaDia = diasEnUnMes(mes, anoActual) - dia;
-                    var nuevoDia = 7 - restaDia + "/" + mes + "/" + anoActual
+                    return nuevoDia = anoActual + "-" + mes + "-" + 7 - restaDia
                 }
                 break;
             case 4:
                 if(dia + 14 <= diasEnUnMes(mes, anoActual)){
-                    var nuevoDia = diasEnUnMes(mes, anoActual) + 14 + "/" + mes + "/" + anoActual
+                    return nuevoDia = anoActual + "-" + mes + "-" + diasEnUnMes(mes, anoActual) + 14
                 }else{
                     if(mes === 12){
                         mes = 1
@@ -202,7 +207,7 @@ function fechaSiguiente(){
                         mes = mes + 1
                     }
                     var restaDia = diasEnUnMes(mes, anoActual) - dia;
-                    var nuevoDia = 14 - restaDia + "/" + mes + "/" + anoActual
+                    return nuevoDia = anoActual + "-" + mes + "-" + 14 - restaDia
                 }
                 break;
             case 5:
@@ -221,9 +226,9 @@ function fechaSiguiente(){
                     }
                 }
                 if(existe === true){
-                    var nuevoDia = dia + "/" + mes + "/" + anoActual
+                    return nuevoDia = anoActual + "-" + mes + "-" + dia
                 }else{
-                    var nuevoDia = diasEnUnMes(mes, anoActual) + "/" + mes + "/" + anoActual
+                    return nuevoDia = anoActual + "-" + mes + "-" + diasEnUnMes(mes, anoActual)
                 }
                 break;
             case 6:
@@ -236,9 +241,9 @@ function fechaSiguiente(){
                     }
                 }
                 if(existe === true){
-                    var nuevoDia = dia + "/" + mes + "/" + anoActual
+                    return nuevoDia = anoActual + "-" + mes + "-" + dia
                 }else{
-                    var nuevoDia = diasEnUnMes(mes, anoActual + 1) + "/" + mes + "/" + anoActual
+                    return nuevoDia = anoActual + "-" + mes + "-" + diasEnUnMes(mes, anoActual + 1)
                 }
                 break;
         }
