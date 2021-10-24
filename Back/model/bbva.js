@@ -400,7 +400,8 @@ class MySQL
 
                 let query = `SELECT p.id, p.titulo, date_format(p.fecha, '%d-%m-%Y') AS fecha, p.cantidad, p.account_entrada, p.account_salida, p.recurrencia_id
                 FROM pagos_automaticos p
-                WHERE DATE(p.fecha) = '${fecha}'`;
+                WHERE p.activo = TRUE
+                AND DATE(p.fecha) = '${fecha}'`;
 
                 connection.query(query, [], (error, result) => {
                     if(error)
